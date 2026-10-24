@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#123b68">
+  <title>إهداءٌ يتجاوز الكلمات</title>
+  <style>
+    :root {
+      --navy: #123b68;
+      --blue: #4d91c9;
+      --sky: #dff2ff;
+      --pale: #f4faff;
+      --ink: #183653;
+      --muted: #65809a;
+      --white: #fff;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 8%, rgba(174,220,250,.55), transparent 28rem),
+        linear-gradient(180deg, #f7fbff 0%, #eaf6ff 55%, #f8fbff 100%);
+      font-family: Tahoma, Arial, sans-serif;
+      line-height: 1.9;
+    }
+    button { font: inherit; cursor: pointer; }
+    .page {
+      min-height: 100svh;
+      padding: 34px 18px;
+      display: grid;
+      place-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .page::before, .page::after {
+      content: "✦";
+      position: absolute;
+      color: rgba(77,145,201,.22);
+      font-size: 2rem;
+      pointer-events: none;
+    }
+    .page::before { top: 10%; right: 9%; }
+    .page::after { bottom: 11%; left: 10%; font-size: 1.4rem; }
+    .eyebrow {
+      color: var(--blue);
+      letter-spacing: .04em;
+      font-size: .9rem;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+    h1, h2, p { margin-top: 0; }
+    h1, h2 { color: var(--navy); line-height: 1.5; }
+    .cover-content { width: min(100%, 650px); text-align: center; z-index: 1; }
+    .cover-title { font-size: clamp(1.7rem, 5vw, 2.6rem); margin-bottom: 8px; }
+    .cover-subtitle { color: var(--muted); margin-bottom: 30px; }
+    .envelope-button {
+      display: block;
+      border: 0;
+      background: transparent;
+      padding: 0;
+      margin: 0 auto 22px;
+      width: min(86vw, 390px);
+      transition: transform .25s ease;
+    }
+    .envelope-button:hover { transform: translateY(-5px); }
+    .envelope { position: relative; aspect-ratio: 1.35; filter: drop-shadow(0 18px 24px rgba(18,59,104,.16)); }
+    .env-back {
+      position: absolute; inset: 8% 4% 5%; border-radius: 18px;
+      background: #c4e5fb;
+    }
+    .env-paper {
+      position: absolute; left: 13%; right: 13%; top: 4%; height: 79%;
+      border-radius: 12px; background: white; color: var(--navy);
+      display: grid; place-items: center; padding: 18px;
+      font-weight: bold; box-shadow: 0 3px 10px #123b6812;
+    }
+    .env-front {
+      position: absolute; inset: 30% 4% 5%; border-radius: 0 0 18px 18px;
+      background: #83bde7; clip-path: polygon(0 0,50% 65%,100% 0,100% 100%,0 100%);
+    }
+    .env-flap {
+      position: absolute; top: 8%; left: 4%; right: 4%; height: 54%;
+      background: #a8d7f6; clip-path: polygon(0 0,100% 0,50% 100%);
+      transform-origin: top center; transition: transform .7s ease, opacity .35s ease;
+      z-index: 3;
+    }
+    .envelope.open .env-flap { transform: rotateX(180deg); opacity: .25; }
+    .seal {
+      position: absolute; z-index: 4; top: 46%; left: 50%; transform: translate(-50%,-50%);
+      width: 58px; height: 58px; border-radius: 50%; display: grid; place-items: center;
+      background: var(--navy); color: white; font-size: 1.35rem;
+      box-shadow: 0 4px 12px #123b6830; transition: opacity .3s ease;
+    }
+    .envelope.open .seal { opacity: 0; }
+    .hint { color: var(--blue); font-weight: bold; margin-bottom: 0; }
+    .letter-card {
+      width: min(100%, 760px); background: rgba(255,255,255,.88);
+      border: 1px solid #cfe7f8; border-radius: 26px;
+      padding: clamp(24px, 5vw, 52px); box-shadow: 0 18px 50px rgba(18,59,104,.08);
+      text-align: center; position: relative; z-index: 1;
+    }
+    .letter-card h2 { font-size: clamp(1.5rem, 4vw, 2rem); margin-bottom: 20px; }
+    .letter-card p { margin-bottom: 15px; }
+    .recipient { font-size: 1.15rem; font-weight: bold; }
+    .signature { color: var(--blue); font-weight: bold; margin-top: 24px; }
+    .action {
+      display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+      background: var(--navy); color: white; border: 0; border-radius: 999px;
+      padding: 12px 24px; margin-top: 22px; box-shadow: 0 8px 20px #123b6825;
+      transition: transform .2s, background .2s;
+    }
+    .action:hover { transform: translateY(-2px); background: #1c5188; }
+    .donation-card { width: min(100%, 760px); text-align: center; position: relative; z-index: 1; }
+    .donation-card h2 { font-size: clamp(1.7rem, 5vw, 2.3rem); margin-bottom: 8px; }
+    .donation-card .lead { color: var(--muted); margin-bottom: 25px; }
+    .image-frame {
+      width: min(100%, 560px); min-height: 250px; margin: 0 auto;
+      border: 2px dashed #8abfe5; border-radius: 22px; background: rgba(255,255,255,.75);
+      display: grid; place-items: center; padding: 18px; overflow: hidden;
+    }
+    .image-frame img { display: block; width: 100%; height: auto; max-height: 620px; object-fit: contain; border-radius: 12px; }
+    .placeholder { padding: 24px; color: var(--muted); }
+    .placeholder .symbol { display: block; font-size: 2.8rem; color: var(--blue); }
+    .upload-label {
+      display: inline-flex; align-items: center; gap: 8px; margin-top: 16px;
+      color: var(--navy); border: 1px solid #9bc9e9; background: white;
+      border-radius: 999px; padding: 9px 18px; cursor: pointer; font-weight: bold;
+    }
+    .upload-label input { display: none; }
+    .small-note { color: #7890a5; font-size: .82rem; margin-top: 12px; }
+    footer { text-align: center; color: var(--muted); padding: 20px; font-size: .85rem; }
+    .hidden { display: none; }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="page" id="start">
+      <div class="cover-content">
+        <div class="eyebrow">رسالة خاصة</div>
+        <h1 class="cover-title">إلى من يستحقون أثرًا لا يُنسى…</h1>
+        <p class="cover-subtitle">رسالة صغيرة، تحمل في طيّاتها شيئًا من القلب.</p>
+        <button class="envelope-button" id="openEnvelope" aria-label="افتح الظرف">
+          <div class="envelope" id="envelope">
+            <div class="env-back"></div>
+            <div class="env-paper">إهداءٌ يتجاوز الكلمات</div>
+            <div class="env-front"></div>
+            <div class="env-flap"></div>
+            <div class="seal">✦</div>
+          </div>
+        </button>
+        <p class="hint" id="openHint">اضغط على الظرف لفتح الرسالة</p>
+      </div>
+    </section>
+
+    <section class="page hidden" id="letter">
+      <article class="letter-card">
+        <div class="eyebrow">رسالة إهداء</div>
+        <h2>إلى نادي التأمين وإدارة المخاطر،</h2>
+        <p>بعض الامتنان لا تفيه الكلمات حقّه، وبعض الهدايا لا تُقاس بقيمتها، بل بالأثر الذي تتركه.</p>
+        <p>أهديكم شيئًا من الخير، تقديرًا لأثركم، ودعوةً بأن يبارك الله مسيرتكم، ويجعل لكم في كل خطوة أثرًا طيبًا لا ينقطع.</p>
+        <p class="signature">ولأن أجمل الهدايا ما امتدّ أثرها…</p>
+        <button class="action" id="toGift">هناك ما ينتظركم في الأسفل <span aria-hidden="true">↓</span></button>
+      </article>
+    </section>
+
+    <section class="page hidden" id="gift">
+      <div class="donation-card">
+        <div class="eyebrow">هدية الخير</div>
+        <h2>هديةٌ من القلب، وأجرٌ نرجو ألّا ينقطع.</h2>
+        <p class="lead">جعلت ختام هذا الإهداء صدقةً عبر منصة إحسان، لعلّها تكون أثرًا طيبًا يُهدى لكم، وخيرًا يمتدّ نفعه بإذن الله.</p>
+        <div class="image-frame" id="imageFrame">
+          <div class="placeholder" id="placeholder">
+            <span class="symbol">♡</span>
+            <strong>مساحة صورة التبرع من إحسان</strong>
+            <p>أضيفي صورة التبرع الخاصة بالعضو هنا.</p>
+          </div>
+          <img id="donationImage" class="hidden" alt="صورة التبرع من منصة إحسان">
+        </div>
+        <label class="upload-label">
+          <span>＋ إضافة صورة التبرع</span>
+          <input id="imageUpload" type="file" accept="image/*">
+        </label>
+        <p class="small-note">اختيار الصورة هنا للمعاينة فقط. لإظهارها على GitHub للجميع، ضعي الصورة داخل ملفات الموقع واتبعي التعليمات في README.</p>
+        <p class="signature">تقبّل الله منّا ومنكم، وكتب لنا ولكم الأجر. 🩵</p>
+      </div>
+    </section>
+  </main>
+  <footer>إهداءٌ يتجاوز الكلمات · نادي التأمين وإدارة المخاطر</footer>
+
+  <script>
+    const openButton = document.getElementById('openEnvelope');
+    const envelope = document.getElementById('envelope');
+    const hint = document.getElementById('openHint');
+    const letter = document.getElementById('letter');
+    const gift = document.getElementById('gift');
+
+    openButton.addEventListener('click', () => {
+      envelope.classList.add('open');
+      hint.textContent = 'تم فتح الرسالة';
+      letter.classList.remove('hidden');
+      setTimeout(() => letter.scrollIntoView({ behavior: 'smooth', block: 'center' }), 280);
+    });
+
+    document.getElementById('toGift').addEventListener('click', () => {
+      gift.classList.remove('hidden');
+      gift.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+
+    document.getElementById('imageUpload').addEventListener('change', (event) => {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+      const image = document.getElementById('donationImage');
+      image.src = URL.createObjectURL(file);
+      image.classList.remove('hidden');
+      document.getElementById('placeholder').classList.add('hidden');
+    });
+
+    // لتخصيص الإهداء باسم عضو، أضيفي ?name=اسم-العضو إلى نهاية رابط الموقع.
+    const params = new URLSearchParams(window.location.search);
+    const memberName = params.get('name');
+    if (memberName) {
+      document.querySelector('.letter-card h2').textContent = `إلى ${memberName}،`;
+    }
+  </script>
+</body>
+</html>
